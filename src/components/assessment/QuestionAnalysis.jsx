@@ -47,8 +47,10 @@ function QuestionAnalysis({ score, totalQuestions }) {
           </span>
         </div>
         <p className="text-gray-700 mb-6">
-          You scored {score} question correct out of {totalQuestions}. However
-          it still needs some improvements
+          {score === 15
+            ? `You scored ${score} question correct out of ${totalQuestions}. Keep the hustle going.`
+            : `You scored ${score} question correct out of ${totalQuestions}. However
+          it still needs some improvements`}
         </p>
         <div className="flex justify-center">
           <div className="h-40 w-40 relative">

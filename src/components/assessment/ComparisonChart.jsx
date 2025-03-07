@@ -102,8 +102,9 @@ function ComparisonChart({ percentile, generateDistributionData }) {
         </h3>
         <div className="mb-4">
           <p className="text-gray-700">
-            You scored {percentile}% percentile which is lower than the average
-            percentile 72% of all the engineers who took this assessment
+            {percentile === 100
+              ? "You have scored the highest percentile among all students"
+              : `You scored ${percentile}% percentile which is lower than the average percentile 72% of all the engineers who took this assessment`}
           </p>
         </div>
         <div className="h-64">

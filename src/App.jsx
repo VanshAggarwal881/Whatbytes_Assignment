@@ -1,6 +1,5 @@
-import "./App.css";
 import { useState } from "react";
-
+import { asset } from "./assets/assest";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -14,13 +13,16 @@ import {
 } from "chart.js";
 import annotationPlugin from "chartjs-plugin-annotation";
 
-import ComparisonChart from "./components/assessment/ComparisonChart";
-import StatSection from "./components/assessment/StatSection";
-import TestHeader from "./components/assessment/TestHeader";
-import Header from "./components/layout/Header";
-import Sidebar from "./components/layout/Sidebar";
-import SyllabusAnalysis from "./components/assessment/SyllabusAnalysis";
-import QuestionAnalysis from "./components/assessment/QuestionAnalysis";
+import {
+  ComparisonChart,
+  StatSection,
+  TestHeader,
+  Header,
+  Sidebar,
+  SyllabusAnalysis,
+  QuestionAnalysis,
+  UpdateScoreModal,
+} from "./index.js";
 
 // Register ChartJS components including annotation plugin
 ChartJS.register(
@@ -50,6 +52,36 @@ function App() {
     ],
   });
 
+  // State for modal visibility
+  const [showModal, setShowModal] = useState(false);
+
+  // State for form inputs
+  const [formInputs, setFormInputs] = useState({
+    rank: assessmentData.rank,
+    percentile: assessmentData.percentile,
+    score: assessmentData.score,
+  });
+
+  // Update form input state
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormInputs({
+      ...formInputs,
+      [name]: parseInt(value) || 0,
+    });
+  };
+
+  // Save form data and update main state
+  const handleSave = () => {
+    setAssessmentData({
+      ...assessmentData,
+      rank: formInputs.rank,
+      percentile: formInputs.percentile,
+      score: formInputs.score,
+    });
+    setShowModal(false);
+  };
+
   // Distribution data for line chart
   // Uses a normal distribution curve based on percentile
   const generateDistributionData = () => {
@@ -78,25 +110,65 @@ function App() {
 
     return points;
   };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <Sidebar />
-      <TestHeader />
-      <StatSection />
-      <ComparisonChart
-        percentile={assessmentData.percentile}
-        generateDistributionData={generateDistributionData}
-      />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <SyllabusAnalysis skillBreakdown={assessmentData.skillBreakdown} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="flex flex-col md:flex-row">
+          {/* Sidebar */}
+          <Sidebar activeItem="skilltest" />
 
-        <QuestionAnalysis
-          score={assessmentData.score}
-          totalQuestions={assessmentData.totalQuestions}
-        />
+          {/* Main Content */}
+          <div className="flex-1 md:ml-8">
+            {/* Skill Test Header */}
+            <TestHeader
+              title="Hyper Text Markup Language"
+              details="Questions: 08 | Duration: 15 mins | Submitted on 5 June 2021"
+              icon={asset.testheaderasset}
+              onUpdate={() => setShowModal(true)}
+            />
+
+            {/* Quick Statistics */}
+            <StatSection
+              rank={assessmentData.rank}
+              percentile={assessmentData.percentile}
+              score={assessmentData.score}
+              totalQuestions={assessmentData.totalQuestions}
+            />
+
+            {/* Comparison Graph */}
+            <ComparisonChart
+              percentile={assessmentData.percentile}
+              generateDistributionData={generateDistributionData}
+            />
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Syllabus Wise Analysis */}
+              <SyllabusAnalysis
+                skillBreakdown={assessmentData.skillBreakdown}
+              />
+
+              {/* Question Analysis */}
+              <QuestionAnalysis
+                score={assessmentData.score}
+                totalQuestions={assessmentData.totalQuestions}
+              />
+            </div>
+          </div>
+        </div>
       </div>
+
+      {/* Update Modal */}
+      <UpdateScoreModal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        formInputs={formInputs}
+        handleInputChange={handleInputChange}
+        handleSave={handleSave}
+        iconSrc={asset.updatemodalasset}
+      />
     </div>
   );
 }

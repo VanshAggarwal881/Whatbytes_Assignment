@@ -20,6 +20,7 @@ import TestHeader from "./components/assessment/TestHeader";
 import Header from "./components/layout/Header";
 import Sidebar from "./components/layout/Sidebar";
 import SyllabusAnalysis from "./components/assessment/SyllabusAnalysis";
+import QuestionAnalysis from "./components/assessment/QuestionAnalysis";
 
 // Register ChartJS components including annotation plugin
 ChartJS.register(
@@ -90,6 +91,11 @@ function App() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <SyllabusAnalysis skillBreakdown={assessmentData.skillBreakdown} />
+
+        <QuestionAnalysis
+          score={assessmentData.score}
+          totalQuestions={assessmentData.totalQuestions}
+        />
       </div>
     </div>
   );

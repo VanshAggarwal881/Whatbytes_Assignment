@@ -19,6 +19,7 @@ import StatSection from "./components/assessment/StatSection";
 import TestHeader from "./components/assessment/TestHeader";
 import Header from "./components/layout/Header";
 import Sidebar from "./components/layout/Sidebar";
+import SyllabusAnalysis from "./components/assessment/SyllabusAnalysis";
 
 // Register ChartJS components including annotation plugin
 ChartJS.register(
@@ -86,6 +87,10 @@ function App() {
         percentile={assessmentData.percentile}
         generateDistributionData={generateDistributionData}
       />
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <SyllabusAnalysis skillBreakdown={assessmentData.skillBreakdown} />
+      </div>
     </div>
   );
 }

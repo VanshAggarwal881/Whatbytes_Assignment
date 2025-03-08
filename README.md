@@ -28,18 +28,18 @@ WhatBytes is a web application built with React that helps users track and visua
 whatbytes/
 ├── Components/
 │   ├── Layout/
-│   │   ├── Header.js
-│   │   └── Sidebar.js
+│   │   ├── Header.jsx
+│   │   └── Sidebar.jsx
 │   └── Assessment/
-│       ├── TestHeader.js
-│       ├── StatCard.js
-│       ├── StatsSection.js
-│       ├── ComparisonChart.js
-│       ├── SkillProgressBar.js
-│       ├── SyllabusAnalysis.js
-│       ├── QuestionAnalysis.js
-│       └── UpdateScoreModal.js
-└── App.js
+│       ├── TestHeader.jsx
+│       ├── StatCard.jsx
+│       ├── StatsSection.jsx
+│       ├── ComparisonChart.jsx
+│       ├── SkillProgressBar.jsx
+│       ├── SyllabusAnalysis.jsx
+│       ├── QuestionAnalysis.jsx
+│       └── UpdateScoreModal.jsx
+└── App.jsx
 ```
 
 ## Component Breakdown
